@@ -7,42 +7,11 @@
         Style="{StaticResource MaterialDesignWindow}"
         xmlns:local="clr-namespace:VU1WPF"
         mc:Ignorable="d"
-        Title="VU1 - Companion App" Height="600" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="None" Closing="mainWindow_Closing">
+        Title="VU Dials - Config App" Height="600" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowStyle="None" Closing="mainWindow_Closing">
     <Grid HorizontalAlignment="Right" Width="800">
-
-
-        <!-- Title bar canvas -->
-        <Canvas x:Name="cnvsTitleCanvas" Margin="0,0,0,379">
-            <Grid Width="{Binding ActualWidth, ElementName=cnvsTitleCanvas}" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Label x:Name="lblTitle" Content="VU Dials - Config App" FontWeight="Bold" FontFamily="Source Code Pro" Canvas.Left="295" VerticalAlignment="Center" HorizontalAlignment="Center" Height="24"/>
-                <Button x:Name="btnX" Content="X" HorizontalAlignment="Left" VerticalAlignment="Center" Width="38" Height="22" FontSize="10" BorderThickness="0,0,0,0" Click="btnX_Click" Canvas.Left="760" Canvas.Top="1" Margin="752,1,0,0" materialDesign:ButtonAssist.CornerRadius="2" ToolTip="Close">
-                    <Button.Background>
-                        <SolidColorBrush Color="{DynamicResource Primary500}"/>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="btnMin" Content="_" HorizontalAlignment="Left" VerticalAlignment="Center" Width="38" Height="22" FontSize="10" BorderThickness="0,0,0,0" Click="btnMin_Click" Canvas.Left="715" Canvas.Top="1" Margin="709,1,0,0" materialDesign:ButtonAssist.CornerRadius="2" ToolTip="Minimize" >
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{DynamicResource Accent100Foreground}"/>
-                    </Button.Foreground>
-                    <Button.Background>
-                        <SolidColorBrush Color="{DynamicResource Accent200Foreground}"/>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="btnMinToTray" Content="T" HorizontalAlignment="Left" VerticalAlignment="Center" Width="38" Height="22" FontSize="10" BorderThickness="0,0,0,0" Click="btnMinToTray_Click" Canvas.Left="715" Canvas.Top="1" Margin="666,1,0,0" materialDesign:ButtonAssist.CornerRadius="2" ToolTip="Minimize to system tray" >
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{DynamicResource Accent100Foreground}"/>
-                    </Button.Foreground>
-                    <Button.Background>
-                        <SolidColorBrush Color="{DynamicResource Accent200Foreground}"/>
-                    </Button.Background>
-                </Button>
-            </Grid>
-        </Canvas>
-
-
         <!-- Dial list canvas -->
         <StackPanel Orientation="Vertical" x:Name="cnvsDialCanvas" Margin="0,46,551,0">
-            <Label Content="Dial List" HorizontalAlignment="Center" VerticalAlignment="Top" Width="244" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold"/>
+            <Label Content="Dial List" HorizontalAlignment="Center" VerticalAlignment="Top" Width="244" HorizontalContentAlignment="Center" FontSize="26" FontWeight="Bold"/>
             <ListBox x:Name="lbDials" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lbDials_SelectionChanged" Canvas.Top="32" Height="410" Width="230" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,52,0,0" Background="#00000000" Style="{DynamicResource MaterialDesignListBox}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -58,32 +27,30 @@
 
         <!-- Main dial config canvas -->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="249,46,10,10">
-            <Label Content="Configure dial" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <Label Content="Configure dial" FontSize="26" FontWeight="Bold" HorizontalAlignment="Center" Margin="0, 0, 0, 30"/>
             <Grid Width="531" HorizontalAlignment="Left" Canvas.Left="10" VerticalAlignment="Center" Margin="3">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="10" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="2" Content="Dial Name:" Height="25" Width="100" HorizontalAlignment="Left" />
-                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtlSelectedDialName" TextWrapping="Wrap" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250"/>
+                <Label Grid.Row="0" Content="Dial Name:" Height="25" Width="100" HorizontalAlignment="Left" />
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtlSelectedDialName" TextWrapping="Wrap" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250"/>
 
-                <Label Grid.Row="3" Content="Dial UID:" Height="25" Width="100" HorizontalAlignment="Left" />
-                <Label Grid.Row="3" Grid.Column="1" x:Name="lblSelectedDialUID" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Width="220" Content=""/>
+                <Label Grid.Row="1" Content="Dial UID:" Height="25" Width="100" HorizontalAlignment="Left" />
+                <Label Grid.Row="1" Grid.Column="1" x:Name="lblSelectedDialUID" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Width="220" Content=""/>
 
-                <Label Grid.Row="5" Content="Metric Type" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="5" Grid.Column="1" x:Name="cbDialMetricCategory" Width="220" Height="25" HorizontalAlignment="Left"  ItemsSource="{Binding}"  SelectionChanged="cbDialMetricCategory_SelectionChanged">
+                <Label Grid.Row="2" Content="Metric Type" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cbDialMetricCategory" Width="220" Height="25" HorizontalAlignment="Left"  ItemsSource="{Binding}"  SelectionChanged="cbDialMetricCategory_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -93,8 +60,8 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <Label Grid.Row="6" Content="Selected Metric" Width="130" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="6" Grid.Column="1" x:Name="cbDialMetric" Width="220" Height="25" HorizontalAlignment="Left" ItemsSource="{Binding}">
+                <Label Grid.Row="4" Content="Selected Metric" Width="130" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbDialMetric" Width="220" Height="25" HorizontalAlignment="Left" ItemsSource="{Binding}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -110,10 +77,10 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Label Grid.Row="7" Content="Metric Min" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="7" Grid.Column="1" x:Name="txtMinValue" TextWrapping="Wrap" Text="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" ToolTip="This value will be used as the dial's 0%" PreviewTextInput="NumericTextBoxInput" />
-                <Label Grid.Row="8" Content="Metric Max" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="8" Grid.Column="1" x:Name="txtMaxValue" TextWrapping="Wrap" Text="100" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50"  ToolTip="This value will be used as the dial's 100%" PreviewTextInput="NumericTextBoxInput" />
+                <Label Grid.Row="5" Content="Metric Min" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtMinValue" TextWrapping="Wrap" Text="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" ToolTip="This value will be used as the dial's 0%" PreviewTextInput="NumericTextBoxInput" />
+                <Label Grid.Row="6" Content="Metric Max" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtMaxValue" TextWrapping="Wrap" Text="100" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50"  ToolTip="This value will be used as the dial's 100%" PreviewTextInput="NumericTextBoxInput" />
             </Grid>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0, 5, 0, 0" >
                 <Button x:Name="btnUploadImage" Margin="5" Content="Set image" Width="120" Height="32" HorizontalAlignment="Left" ToolTip="Change dial background image" Click="btnChangeImage_click" Grid.RowSpan="2"/>

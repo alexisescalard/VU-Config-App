@@ -71,10 +71,6 @@ namespace VU1WPF
             cbDialMetric.ItemsSource = computerSensors;
             cbDialMetricCategory.ItemsSource = SensorManager.UsedSensors;
 
-            // Add drag
-            //cnvsTitleCanvas.MouseDown += delegate { DragMove(); };
-            lblTitle.MouseDown += delegate { DragMove(); };
-
             RefreshDialList();
             //SetAllDialValue(50);
 
