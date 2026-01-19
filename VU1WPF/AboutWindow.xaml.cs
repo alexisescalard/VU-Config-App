@@ -22,8 +22,6 @@ namespace VU1WPF
         public AboutWindow()
         {
             InitializeComponent();
-
-            txtBuildStamp.Text = "Build date: "+ Properties.Resources.BuildDate.ToString();
         }
 
         private void btnCloseWindow(object sender, RoutedEventArgs e)

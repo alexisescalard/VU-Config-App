@@ -71,9 +71,6 @@ namespace VU1WPF
             cbDialMetric.ItemsSource = computerSensors;
             cbDialMetricCategory.ItemsSource = SensorManager.UsedSensors;
 
-            // Add build stamp to title
-            lblTitle.Content = lblTitle.Content + Properties.Resources.BuildDate.ToString();
-
             // Add drag
             //cnvsTitleCanvas.MouseDown += delegate { DragMove(); };
             lblTitle.MouseDown += delegate { DragMove(); };
@@ -97,11 +94,6 @@ namespace VU1WPF
             timer.Start();
 
             Log.Information(String.Format("Dials updated every {0} seconds.", dialUpdatePeriod));
-
-            if (RegistryValueExists("HKCU", VU1_Registry_Path, VU1_Registry_Key))
-            {
-                chRunOnStartup.IsChecked = true;
-            }
         }
 
         private void btnX_Click(object sender, RoutedEventArgs e)
@@ -140,21 +132,12 @@ namespace VU1WPF
             lblSelectedDialUID.Content = sel.UID.ToString();
             if (gCurrentlySelectedDial.Sensor != null)
             {
-                lblCurrentMetric.Content = String.Format("{0} - {1} - {2}", gCurrentlySelectedDial.Sensor.Name.ToString(), gCurrentlySelectedDial.Sensor.SensorType.ToString(), gCurrentlySelectedDial.Sensor.Identifier.ToString());
-                //lblCurrentValue.Content = gCurrentlySelectedDial.Sensor.Value.ToString();
-                lblScalingMin.Content = gCurrentlySelectedDial.ScaleMin.ToString();
-                lblScalingMax.Content = gCurrentlySelectedDial.ScaleMax.ToString();
                 txtMinValue.Text = gCurrentlySelectedDial.ScaleMin.ToString();
                 txtMaxValue.Text = gCurrentlySelectedDial.ScaleMax.ToString();
                 
             }
             else
             {
-                lblCurrentMetric.Content = "";
-                lblCurrentValue.Content = "";
-                lblCurrentPercent.Content = "";
-                lblScalingMin.Content = "";
-                lblScalingMax.Content = "";
                 txtMinValue.Text = "0";
                 txtMaxValue.Text = "100";
             }
@@ -212,34 +195,9 @@ namespace VU1WPF
             sortDialThresholds();
         }
 
-        public void PauseDialUpdate()
-        {
-            gDialUpdatePaused = true;
-            btnToggleDialUpdate.Content = new PackIcon { Kind = PackIconKind.Play };
-        }
-
-        public void ResumeDialUpdate()
-        {
-            gDialUpdatePaused = false;
-            btnToggleDialUpdate.Content = new PackIcon { Kind = PackIconKind.Pause };
-
-        }
-
         private void btnRefreshDials_click(object sender, RoutedEventArgs e)
         {
             RefreshDialList();
-        }
-
-        private void btnToggleDialUpdate_click(object sender, RoutedEventArgs e)
-        {
-            if(gDialUpdatePaused)
-            {
-                ResumeDialUpdate();
-            }
-            else
-            {
-                PauseDialUpdate();
-            }
         }
 
         private float ParseMinMaxValue(String value, float def)
@@ -293,12 +251,7 @@ namespace VU1WPF
                     //gCurrentlySelectedDial.Sensor = computerSensors[cbDialMetric.SelectedIndex].Sensor;
                     VU1_Sensor selectedSensor = cbDialMetric.SelectedItem as VU1_Sensor;
                     gCurrentlySelectedDial.Sensor = selectedSensor.Sensor;
-                    lblCurrentMetric.Content = String.Format("{0} - {1} - {2}", gCurrentlySelectedDial.Sensor.Name.ToString(), gCurrentlySelectedDial.Sensor.SensorType.ToString(), gCurrentlySelectedDial.Sensor.Identifier.ToString());
                 }
-
-                lblCurrentValue.Content = gCurrentlySelectedDial.Sensor.Value.ToString();
-                lblScalingMin.Content = gCurrentlySelectedDial.ScaleMin.ToString();
-                lblScalingMax.Content = gCurrentlySelectedDial.ScaleMax.ToString();
 
                 // Update config file
                 ConfigManager.UpdateDialConfig(gCurrentlySelectedDial, true);
@@ -374,23 +327,6 @@ namespace VU1WPF
             setColorWindow.Owner = this;
             setColorWindow.SetMainWindow(this);
             setColorWindow.Show();
-        }
-
-        private void chRunOnSystemStart(object sender, RoutedEventArgs e)
-        {
-
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
-            if (chRunOnStartup.IsChecked == true)
-            {
-                rk.SetValue(VU1_Registry_Key, System.Windows.Forms.Application.ExecutablePath);
-            }
-
-            else
-            {
-                rk.DeleteValue(VU1_Registry_Key, false);
-            }
-
         }
 
         public void Selected_Dial_Change_Color(int red, int green, int blue)
@@ -503,17 +439,6 @@ namespace VU1WPF
                         dialGreen = match.BacklightGreen;
                         dialBlue = match.BacklightBlue;
                         bBacklightUpdate = true;
-                    }
-                }
-
-
-                // Check if we need to update GUI
-                if (gCurrentlySelectedDial.Sensor != null)
-                {
-                    if (gCurrentlySelectedDial.Sensor.Identifier == dial.Sensor.Identifier)
-                    {
-                        lblCurrentPercent.Content = String.Format("{0}%", dialValue);
-                        lblCurrentValue.Content = String.Format("[{0:0.000}]", fSensorValue);
                     }
                 }
 
